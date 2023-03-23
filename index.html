@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script> 
+        async function handleSubmission(e) {
+            const input = document.getElementById("textInput");
+            if (input) {
+                console.log(`received this value: ${input.value}`)
+                if (input.value == undefined) {return;}
+                // get the sentiment response 
+                const apiResponse = await fetch(`http://localhost:8000/predict/${input.value}`, {mode: 'cors'});
+                const data = await apiResponse.json(); 
+                // render response 
+                document.getElementById("display").innerText = data.sentiment;
+            }
+        }
+    </script> 
+    <div class="main"> 
+        <h1> Demo of APIs </h1>
+        <h3> Enter text for sentiment prediction. </h3>  
+        <div style="text-align: center;"> 
+            <form>
+                <label for="textInput">Enter Text</label><br>
+                <input type="text" id="textInput" name="fname"><br>
+                <button type="submit" onclick="handleSubmission(); return false"> Submit </button>
+            </form>
+        </div> 
+        <h2 id="display"> </h2>
+    </div> 
+</body>
+
+
+<style> 
+
+.main {
+    text-align: center; 
+}
+
+form {
+    display: flex; 
+    margin-left: auto; 
+    margin-right: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25em;
+}
+
+</style> 
+
+</html>
