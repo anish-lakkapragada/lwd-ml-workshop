@@ -16,8 +16,9 @@
                 // get the sentiment response 
                 const apiResponse = await fetch(`http://localhost:8000/predict/${input.value}`, {mode: 'cors'});
                 const data = await apiResponse.json(); 
+                console.log(data);
                 // render response 
-                document.getElementById("display").innerText = data.sentiment;
+                document.getElementById("display").innerText = data.prediction;
             }
         }
     </script> 

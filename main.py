@@ -1,13 +1,14 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-
 from transformers import pipeline
-sentiment_pipeline = pipeline("sentiment-analysis")
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware # CORS noqa
 
 app = FastAPI()
 
+sentiment_pipeline = pipeline("sentiment-analysis")
+
 origins = ["*"]
 
+# CORS noqa
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -16,14 +17,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/ping")
+async def ping_fn(): 
+    return {"ping": "pong"}
+
 @app.get("/predict/{text}")
-async def predict(text):
-    # whatever 
-    return {"sentiment": sentiment_pipeline([text])[0]["label"]}
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-# python3 app.py
-# uvicorn main:app --reload
+async def predict(text): 
+    predictions = sentiment_pipeline([text])
+    return {"prediction": predictions[0]["label"]}
