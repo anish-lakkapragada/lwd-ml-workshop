@@ -18,10 +18,11 @@ app.add_middleware(
 )
 
 @app.get("/ping")
-async def ping_fn(): 
+def ping_fn(): 
     return {"ping": "pong"}
 
 @app.get("/predict/{text}")
-async def predict(text): 
-    predictions = sentiment_pipeline([text])
-    return {"prediction": predictions[0]["label"]}
+def predict_fn(text): 
+    # text is a string
+    prediction = sentiment_pipeline([text])[0]
+    return {"sentiment": prediction["label"]}

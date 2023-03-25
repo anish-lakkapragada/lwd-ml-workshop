@@ -28,3 +28,13 @@ async def root():
 
 # python3 app.py
 # uvicorn main:app --reload
+
+
+# @app.get("/ping")
+# async def ping_fn():
+#     return {"ping": "pong"}
+
+# @app.get("/predict/{text}")
+# async def predict(text):
+#     predictions = sentiment_pipeline([text])
+#     return {"prediction": predictions[0]["label"]}
