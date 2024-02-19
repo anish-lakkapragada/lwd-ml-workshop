@@ -1,0 +1,8 @@
+@app.get("/predict/{text}")
+def predict_fn(text): 
+    # text is a string
+    prediction = sentiment_pipeline([text])[0]
+    return {"sentiment": prediction["label"]}
+
+
+    dwa
